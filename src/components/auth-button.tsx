@@ -23,9 +23,7 @@ export function AuthButton({
   return (
     <Button asChild>
       <a
-        href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_CLIENT_GITHUB}`}
-        target="_blank"
-        rel="noreferrer"
+        href={`https://github.com/login/oauth/authorize?client_id=${import.meta.env.VITE_CLIENT_GITHUB}`}
       >
         LogIn
       </a>
