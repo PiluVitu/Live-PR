@@ -78,7 +78,7 @@ function App() {
 
   if (isError) {
     return (
-      <div className="mx-auto flex h-[600px] w-[728px] flex-col items-center justify-center gap-2">
+      <div className="mx-auto flex h-screen max-w-5xl flex-col items-center justify-center gap-2">
         <h1 className="text-2xl">Live Prs</h1>
         <nav className="flex w-3/5 items-center justify-between">
           <div></div>
@@ -98,7 +98,7 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className="mx-auto flex h-[600px] w-[728px] flex-col items-center justify-center gap-2">
+      <div className="mx-auto flex h-screen max-w-5xl flex-col items-center justify-center gap-2">
         <h1 className="text-2xl">Live Prs</h1>
         <nav className="flex w-3/5 items-center justify-between">
           <span className="flex">
@@ -126,7 +126,7 @@ function App() {
 
   if (isSuccess && isLoged) {
     return (
-      <div className="mx-auto flex h-[600px] w-[728px] flex-col items-center justify-center gap-2">
+      <div className="mx-auto flex h-screen max-w-5xl flex-col items-center justify-center gap-2">
         <h1 className="text-2xl">Live Prs</h1>
         <nav className="flex w-3/5 items-center justify-between">
           <p>
@@ -144,7 +144,7 @@ function App() {
         {!data.data.Data && (
           <h3 className="mt-6">Você ainda não tem prs para revisar</h3>
         )}
-        <ul className="mt-4 flex h-2/3 flex-col gap-3 overflow-auto p-3 px-6">
+        <ul className="mt-4 flex h-4/5 flex-col gap-3 overflow-auto p-3 px-6">
           {data.data.Data?.map((pr) => {
             return (
               <li key={pr.Title}>
@@ -157,7 +157,7 @@ function App() {
     )
   }
   return (
-    <div className="mx-auto flex h-[600px] w-[728px] flex-col items-center justify-center gap-2">
+    <div className="mx-auto flex h-screen max-w-5xl flex-col items-center justify-center gap-2">
       <h1 className="text-2xl">Live Prs</h1>
       <nav className="flex w-3/5 items-center justify-between">
         <div></div>
