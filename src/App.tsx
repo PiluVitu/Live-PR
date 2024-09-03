@@ -29,15 +29,17 @@ export type User = {
   Data: Data[]
   Error: Error
 }
+
+const instance = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+})
+
 async function fetchData(): AxiosPromise<User> {
-  const response = await axios.get<User>(
-    'http://localhost:3000/github/pullrequests',
-    {
-      params: {
-        code: JSON.parse(localStorage.getItem('githubToken') ?? ''),
-      },
+  const response = await instance.get<User>('/github/pullrequests', {
+    params: {
+      code: JSON.parse(localStorage.getItem('githubToken') ?? ''),
     },
-  )
+  })
   return response
 }
 
@@ -51,8 +53,8 @@ function App() {
 
     if (codeValue) {
       // Faça a requisição usando o Axios
-      axios
-        .get('http://localhost:3000/auth/github', {
+      instance
+        .get('/auth/github', {
           params: {
             code: codeValue,
           },
