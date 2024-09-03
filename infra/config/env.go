@@ -6,10 +6,10 @@ var env *Envconfig
 
 type Envconfig struct {
 	GITHUB_TOKEN         string `mapstructure:"GITHUB_TOKEN"`
-	GITHUB_CLIENT_ID     string `mapstructure: "GITHUB_CLIENT_ID"`
-	GITHUB_CLIENT_SECRET string `mapstructure: "GITHUB_CLIENT_SECRET"`
-	GITHUB_REDIRECT_URL  string `mapstructure: "GITHUB_REDIRECT_URL"`
-	PORT                 string `mapstructure: "PORT"`
+	GITHUB_CLIENT_ID     string `mapstructure:"GITHUB_CLIENT_ID"`
+	GITHUB_CLIENT_SECRET string `mapstructure:"GITHUB_CLIENT_SECRET"`
+	GITHUB_REDIRECT_URL  string `mapstructure:"GITHUB_REDIRECT_URL"`
+	PORT                 string `mapstructure:"PORT"`
 }
 
 func GetEnvConfig() *Envconfig {
@@ -17,7 +17,7 @@ func GetEnvConfig() *Envconfig {
 }
 
 func LoadEnv(path string) (*Envconfig, error) {
-	viper.SetConfigName("config")
+	viper.SetConfigName("app_config")
 	viper.SetConfigType("env")
 	viper.AddConfigPath(path)
 	viper.SetConfigFile(".env")
