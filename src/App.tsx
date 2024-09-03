@@ -131,7 +131,7 @@ function App() {
         <nav className="flex w-3/5 items-center justify-between">
           <p>
             User: {` `}
-            <Button asChild variant="link" className="p-0">
+            <Button variant="link" className="cursor-text p-0">
               {data.data.UserLogin}
             </Button>
           </p>
