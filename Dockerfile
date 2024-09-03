@@ -7,6 +7,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o pr-live .
 
 FROM alpine:3.15.11 as api
 WORKDIR /usr/src/app/go/api
+COPY .env . 
 COPY --from=build /usr/src/app/go/api .
 EXPOSE 3000
 CMD ["./pr-live"]
