@@ -4,6 +4,7 @@ go 1.22.1
 
 require (
 	github.com/go-chi/chi v1.5.5
+	github.com/go-chi/cors v1.2.1
 	github.com/google/go-github/v64 v64.0.0
 	github.com/spf13/viper v1.19.0
 	golang.org/x/oauth2 v0.22.0
