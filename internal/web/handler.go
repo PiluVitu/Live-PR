@@ -8,6 +8,7 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"strings"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/github"
@@ -63,18 +64,36 @@ func GithubAuthHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(token.AccessToken)
 }
 
-func ListAllPrsToReview(w http.ResponseWriter, r *http.Request) {
-	repoOptions := []RepoOption{
-		{Owner: "devhatt", RepoName: "octopost"},
-		{Owner: "devhatt", RepoName: "octopost-backend"},
-		{Owner: "devhatt", RepoName: "pet-dex-backend"},
-		{Owner: "devhatt", RepoName: "pet-dex-frontend"},
-		{Owner: "devhatt", RepoName: "devhatt-lp"},
-		// {Owner: "devhatt", RepoName: "mangale"},
-		{Owner: "devhatt", RepoName: "workflows"},
-		{Owner: "devhatt", RepoName: "infra"},
-		{Owner: "devhatt", RepoName: "hatbot-discord"},
+func ListAllUserRepositorys(w http.ResponseWriter, r *http.Request) {
+	ctx := context.Background()
+	GITHUB_TOKEN := r.URL.Query().Get("code")
+	if GITHUB_TOKEN == "" {
+		prCards.Error.Type = "token"
+		prCards.Error.Message = errors.New("missing authToken").Error()
+		w.WriteHeader(http.StatusUnauthorized)
+		json.NewEncoder(w).Encode(prCards)
+		log.Println(prCards.Error)
+		return
 	}
+
+	client := services.GetGithubClient(GITHUB_TOKEN, ctx)
+	repositorys, err := services.ListAllUserRepos(client, ctx)
+	if err != nil {
+		prCards.Error.Type = "pullRequest"
+		prCards.Error.Message = err.Error()
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(prCards)
+		log.Println(prCards.Error)
+		return
+	}
+
+	prCards.Error.Type = ""
+	prCards.Error.Message = ""
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(repositorys)
+}
+
+func ListAllPrsToReview(w http.ResponseWriter, r *http.Request) {
 	GITHUB_TOKEN := r.URL.Query().Get("code")
 
 	if GITHUB_TOKEN == "" {
@@ -85,6 +104,31 @@ func ListAllPrsToReview(w http.ResponseWriter, r *http.Request) {
 		log.Println(prCards.Error)
 		return
 	}
+
+	var repoOptions []RepoOption
+
+	var repoStringsJson []string
+
+	if err := json.NewDecoder(r.Body).Decode(&repoStringsJson); err != nil {
+		prCards.Error.Type = "body-request"
+		prCards.Error.Message = err.Error()
+		w.WriteHeader(http.StatusOK)
+		json.NewEncoder(w).Encode(prCards)
+		log.Println(prCards.Error)
+		return
+	}
+
+	for _, repoStringsJson := range repoStringsJson {
+
+		repo := strings.Split(repoStringsJson, "/")
+
+		repoOptions = append(repoOptions, RepoOption{
+			Owner:    repo[0],
+			RepoName: repo[1],
+		})
+
+	}
+
 	ctx := context.Background()
 
 	client := services.GetGithubClient(GITHUB_TOKEN, ctx)
@@ -111,9 +155,18 @@ func ListAllPrsToReview(w http.ResponseWriter, r *http.Request) {
 			log.Println(prCards.Error)
 			return
 		}
+
 		prCards.Data = append(prCards.Data, prsToReview...)
 	}
 
+	if prCards.Data == nil {
+		prCards.Error.Type = "missing reviews"
+		prCards.Error.Message = errors.New("pull request are missing reviews").Error()
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(prCards)
+		log.Println(prCards.Error)
+		return
+	}
 	prCards.Error.Type = ""
 	prCards.Error.Message = ""
 	w.WriteHeader(http.StatusOK)

@@ -37,7 +37,8 @@ func main() {
 		json.NewEncoder(w).Encode("To funfandooooo filhoooooooo")
 	})
 	r.Get("/auth/github", web.GithubAuthHandler)
-	r.Get("/github/pullrequests", web.ListAllPrsToReview)
+	r.Get("/github/repos", web.ListAllUserRepositorys)
+	r.Post("/github/pullrequests", web.ListAllPrsToReview)
 
 	fmt.Printf("A APIZINHA ESTÁ FUNFANDO NA\nhttp://localhost:%s\n", envVariable.PORT)
 	log.Fatal(http.ListenAndServe(":"+envVariable.PORT, r))
