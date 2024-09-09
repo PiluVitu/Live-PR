@@ -13,6 +13,9 @@ function App() {
   const [isLoged, setIsLoged] = useAuth()
   const pullRequest = usePullRequest(!!isLoged)
   const repository = useRepository(!!isLoged)
+  if (localStorage.getItem('githubRepos') === null) {
+    localStorage.setItem('githubRepos', JSON.stringify([]))
+  }
 
   if ((repository.isError || pullRequest.isError) && isLoged) {
     if (pullRequest.error?.response?.data.Error.Type === 'missing reviews') {

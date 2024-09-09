@@ -33,7 +33,7 @@ export function RepositorySelector({
   const isDesktop = useMediaQuery('(min-width: 768px)')
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState<string[]>(
-    JSON.parse(localStorage.getItem('githubRepos') ?? '') ?? [],
+    JSON.parse((localStorage.getItem('githubRepos') || '') ?? []),
   )
 
   const handleSetValue = (val: string) => {
