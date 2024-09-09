@@ -17,7 +17,6 @@ import {
 } from '@/components/ui/popover'
 import { Repository } from '@/types/repositorys-list'
 import { useState } from 'react'
-import { usePullRequest } from '@/hooks/usePullRequest'
 import { Drawer, DrawerContent, DrawerTrigger } from './ui/drawer'
 import { useMediaQuery } from '@/hooks/useMidiaQuery'
 import { User } from '@/types/live-pr-response'

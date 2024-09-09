@@ -1,4 +1,3 @@
-import { Data } from '@/App'
 import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar'
 import {
   TooltipProvider,
@@ -9,6 +8,7 @@ import {
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { Card } from './ui/card'
+import { Data } from '@/types/live-pr-response'
 
 export function PrCard({ pr }: { pr: Data }) {
   return (
