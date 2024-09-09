@@ -12,7 +12,7 @@ import { Card } from './ui/card'
 
 export function PrCard({ pr }: { pr: Data }) {
   return (
-    <Card className="h-28 p-3">
+    <Card className="h-28 max-w-80 p-3">
       <section className="flex flex-col items-start justify-center overflow-hidden">
         <div className="mb-1 flex w-full justify-between">
           <span className="capitalize">{pr.Repo}</span>
@@ -39,14 +39,19 @@ export function PrCard({ pr }: { pr: Data }) {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <Button asChild variant="link" className="h-fit p-0">
+        <Button
+          asChild={!pr.IsDraft}
+          variant="link"
+          disabled={pr.IsDraft}
+          className="h-fit p-0"
+        >
           <a
-            href={pr.PrURL}
-            className="truncate"
+            href={pr.IsDraft ? '' : pr.PrURL}
             target="_blank"
             rel="noreferrer"
+            title={pr.Title}
           >
-            {pr.Title}
+            <p className="max-w-72 truncate">{pr.Title}</p>
           </a>
         </Button>
       </section>
@@ -60,6 +65,13 @@ export function PrCard({ pr }: { pr: Data }) {
       >
         {pr.ContributorType.toLowerCase().replace(/_/g, ' ')}
       </Badge>
+      {pr.IsDraft ? (
+        <Badge variant="secondary" className="ml-3 mt-3 capitalize">
+          Draft
+        </Badge>
+      ) : (
+        <></>
+      )}
     </Card>
   )
 }

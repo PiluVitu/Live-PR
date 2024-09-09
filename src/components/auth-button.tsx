@@ -23,7 +23,7 @@ export function AuthButton({
   return (
     <Button asChild>
       <a
-        href={`https://github.com/login/oauth/authorize?client_id=${import.meta.env.VITE_CLIENT_GITHUB}`}
+        href={`https://github.com/login/oauth/authorize?client_id=${import.meta.env.VITE_CLIENT_GITHUB}&scope=repo%20repo:status%20read:org`}
       >
         LogIn
       </a>
