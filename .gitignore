@@ -1,1 +1,53 @@
-node_modules
+# Dependências
+node_modules/
+.pnpm-store/
+
+# Arquivos de build
+dist/
+build/
+out/
+.output/
+
+# Arquivos de cache
+.cache/
+.temp/
+.vite/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Variáveis de ambiente
+.env
+.env.*
+!.env.example
+
+# Arquivos de IDE/editores
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Coverage de testes
+coverage/
+
+# PWA
+**/public/workbox-*.js
+**/public/sw.js
+**/public/fallback-*.js
+
+# TypeScript
+*.tsbuildinfo
+
+# Tailwind
+.turbo
